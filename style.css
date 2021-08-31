@@ -1,15 +1,12 @@
-.btn {
-    border: none;
-    background-color: inherit;
-    padding: 14px 28px;
-    font-size: 16px;
-    cursor: pointer;
-    display: inline-block;
-  }
+.title{
+  text-align: center;
+}
 
-.btn:hover {background: rgb(187, 24, 24);}
-.success {color: green;}
-.info {color: dodgerblue;}
-.warning {color: orange;}
-.danger {color: red;}
-.default {color: black;}
+.sample-form{
+  width: 50%;
+  margin: 0 auto;
+}
+
+.sample-form, .loading{
+  text-align: center;
+}
