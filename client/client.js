@@ -28,5 +28,5 @@ form.addEventListener('submit', (event) => {
         headers: {
             'content-type' : 'application/json'
         }
-    });
+    }).then(  );
 });
