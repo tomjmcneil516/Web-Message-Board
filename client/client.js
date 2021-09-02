@@ -2,7 +2,7 @@ console.log('howdy');
 
 const form = document.querySelector('.sample-form')
 const loadingElement = document.querySelector('.loading');
-const API_URL = 'http://localhost:5500/input';
+const API_URL = 'http://localhost:8000/message';
 
 
 loadingElement.style.display = 'none';
@@ -13,19 +13,18 @@ form.addEventListener('submit', (event) => {
     const name = formData.get('name');
     const content = formData.get('content');
 
-    const input = {
+    const message = {
         name,
         content
     };
 
-    console.log(input);
     form.style.display = 'none';
     loadingElement.style.display = '';
 
 
     fetch(API_URL, {
         method: 'POST',
-        body:  JSON.stringify(input),
+        body:  JSON.stringify(message),
         headers: {
             'content-type' : 'application/json'
         }
