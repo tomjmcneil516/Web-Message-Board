@@ -1,4 +1,4 @@
-console.log('howdy');
+
 
 const form = document.querySelector('.sample-form')
 const loadingElement = document.querySelector('.loading');
@@ -28,5 +28,19 @@ form.addEventListener('submit', (event) => {
         headers: {
             'content-type' : 'application/json'
         }
-    }).then(  );
+    }).then(response => response.json())
+    .then(message => {console.log(message);
+        form.reset();
+        loadingElement.style.display = 'none';
+        form.style.display = '';
+    });
 });
+
+listMessages();
+
+function listMessages(){
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(messages => {
+            console.log(messages)});
+}

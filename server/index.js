@@ -14,7 +14,13 @@ const con = mysql.createConnection({
     database: "webapp"
 });
 
-
+con.connect(function(err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+    }
+    console.log("Connected");
+});
 
 
 //database stuff end
@@ -24,11 +30,20 @@ const con = mysql.createConnection({
 app.use(cors());
 app.use(express.json());
 
-app.get('/client/index.html', (req,res) => {
-    res.json({
-        message: 'HELLO WORLD'
+
+app.get('/message', (req,res) => {
+    const sqlcmd = "SELECT * FROM messages";
+    con.query(sqlcmd, function (err, result) {
+        if (err) {
+            console.error('error retrieving: ' + err.stack);
+            return;
+        };
+        res.json(result);
+        console.log("list retrieved");
     });
 });
+
+
 
 function isValidMessage(message){ //validation on server side
     return message.name && message.name.toString().trim() !== '' &&
@@ -37,15 +52,14 @@ function isValidMessage(message){ //validation on server side
 }
 
 function insertMessage(message){
-    con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-        const sqlcmd = "INSERT INTO messages (name, content, date) VALUES ('" + message.name + "', '" + message.content + "', '" + message.date + "')";
-        con.query(sqlcmd, function (err, result) {
-          if (err) throw err;
-          console.log("1 record inserted");
-        });
-      });
+    const sqlcmd = "INSERT INTO messages (name, content, date) VALUES ('" + message.name + "', '" + message.content + "', '" + message.date + "')";
+    con.query(sqlcmd, function (err, result) {
+        if (err) {
+            console.error('error inserting: ' + err.stack);
+            return;
+        };
+        console.log("1 record inserted");
+    });
 }
 
 
@@ -57,7 +71,7 @@ app.post('/message', (req, res) => {
             content: req.body.content.toString(),
             date: new Date().toDateString() + " " + new Date().toLocaleTimeString('en-US')
         };
-
+        
         insertMessage(message);
         res.json(message);
         
@@ -69,6 +83,7 @@ app.post('/message', (req, res) => {
         });
     }
 });
+
 
 app.listen(8000, () => {console.log('Listening...');
 });
