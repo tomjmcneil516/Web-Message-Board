@@ -10,3 +10,10 @@
 .sample-form, .loading{
   text-align: center;
 }
+
+.messages{
+  border-style: groove;
+  border-color:pink;
+  border-width: 25px;
+  text-align: center;
+  }

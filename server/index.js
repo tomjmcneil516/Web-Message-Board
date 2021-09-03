@@ -3,9 +3,9 @@ const cors = require('cors');
 const mysql = require('mysql');
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-
-//database stuff
 
 const con = mysql.createConnection({
     host: "localhost",
@@ -21,14 +21,6 @@ con.connect(function(err) {
     }
     console.log("Connected");
 });
-
-
-//database stuff end
-
-
-
-app.use(cors());
-app.use(express.json());
 
 
 app.get('/message', (req,res) => {

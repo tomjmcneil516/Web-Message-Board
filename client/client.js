@@ -2,7 +2,9 @@
 
 const form = document.querySelector('.sample-form')
 const loadingElement = document.querySelector('.loading');
+const messagesList = document.querySelector('.messages');
 const API_URL = 'http://localhost:8000/message';
+const Filter = require('bad-words'), filter = new Filter();
 
 
 loadingElement.style.display = 'none';
@@ -33,14 +35,35 @@ form.addEventListener('submit', (event) => {
         form.reset();
         loadingElement.style.display = 'none';
         form.style.display = '';
+        listMessages();
     });
 });
 
 listMessages();
 
 function listMessages(){
+    messagesList.innerHTML = '';
     fetch(API_URL)
         .then(response => response.json())
         .then(messages => {
-            console.log(messages)});
+            messages.reverse().forEach(message => {
+                const div = document.createElement('div');
+
+                const header = document.createElement('h3');
+                header.textContent = message.name;
+
+                const contents = document.createElement('p');
+                contents.textContent = message.content;
+                
+                const date = document.createElement('small');
+                date.textContent = message.date;
+
+
+
+                div.appendChild(header);
+                div.appendChild(contents);
+                div.appendChild(date);
+                messagesList.appendChild(div);
+            });
+        });
 }
