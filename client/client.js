@@ -4,7 +4,6 @@ const form = document.querySelector('.sample-form')
 const loadingElement = document.querySelector('.loading');
 const messagesList = document.querySelector('.messages');
 const API_URL = 'http://localhost:8000/message';
-const Filter = require('bad-words'), filter = new Filter();
 
 
 loadingElement.style.display = 'none';
@@ -57,9 +56,7 @@ function listMessages(){
                 
                 const date = document.createElement('small');
                 date.textContent = message.date;
-
-
-
+                
                 div.appendChild(header);
                 div.appendChild(contents);
                 div.appendChild(date);

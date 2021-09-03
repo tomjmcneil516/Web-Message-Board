@@ -11,9 +11,23 @@
   text-align: center;
 }
 
+
+body {
+  background-image: linear-gradient(pink, lavender, lightgrey);
+}
+
 .messages{
-  border-style: groove;
-  border-color:pink;
-  border-width: 25px;
-  text-align: center;
+  text-align: center
+}
+
+.messages > div {
+    display: grid;
+    overflow: hidden;
+    text-align: center;
+    color: black;
+    border-style:ridge;
+    border-color:black;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 50%;
+    margin: auto;
   }

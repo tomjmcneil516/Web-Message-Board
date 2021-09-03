@@ -1,8 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
+const Filter = require('bad-words'), filter = new Filter();
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
 
 const app = express();
+app.use(limiter);
 app.use(cors());
 app.use(express.json());
 
@@ -44,7 +52,7 @@ function isValidMessage(message){ //validation on server side
 }
 
 function insertMessage(message){
-    const sqlcmd = "INSERT INTO messages (name, content, date) VALUES ('" + message.name + "', '" + message.content + "', '" + message.date + "')";
+    const sqlcmd = "INSERT INTO messages (name, content, date) VALUES ('" + filter.clean(message.name) + "', '" + filter.clean(message.content) + "', '" + message.date + "')";
     con.query(sqlcmd, function (err, result) {
         if (err) {
             console.error('error inserting: ' + err.stack);
